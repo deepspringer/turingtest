@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respond to a Question</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Respond to a Question</h1>
+        <div id="countdown-container">
+            <div id="progress-bar" style="width: 100%; height: 20px; background-color: green;"></div>
+            <p>Time remaining: <span id="countdown-timer"></span></p>
+        </div>
+        <p>You need to respond like {{ 'a Human' if 'human' in request.path else 'an AI' }}.</p>
+        <form action="/submit_response" method="post">
+            <select name="question_id">
+                {% for question in game_data['questions'] %}
+                    {% if question['author'] != session['player_name'] %}
+                        <option value="{{ question['id'] }}">{{ question['question'] }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <textarea name="response" placeholder="Type your response here" required></textarea>
+            <!-- Hidden fields -->
+            <input type="hidden" name="response_type" value="human">
+            <input type="hidden" name="intended_author" value="{{ 'human' if 'human' in request.path else 'ai' }}">
+            <button type="submit">Submit Response</button>
+        </form>
+    </div>
+</body>
+</html>

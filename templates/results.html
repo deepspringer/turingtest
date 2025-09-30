@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Game Results</h1>
+        <h2>Players' Scores</h2>
+        <ul>
+            {% for player, info in game_data['players'].items() %}
+                <li>{{ player }}: {{ info['score'] }} points</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Question Responses</h2>
+        {% for question in game_data['questions'] %}
+            <h3>Question: {{ question['question'] }}</h3>
+            <ul>
+                {% set question_id = loop.index0 %}
+                {% for response in game_data['responses'] %}
+                    {% if response['question_id'] == question_id %}
+                        <li>
+                            {{ response['response'] }}
+                            <!-- Dropdown to guess the intended author -->
+                            <select class="guess-response" data-response-id="{{ response['id'] }}">
+                                <option value="">Select intended author</option>
+                                <option value="human_human">Human answering honestly</option>
+                                <option value="ai_ai">AI answering honestly</option>
+                                <option value="human_ai">Human pretending to be AI</option>
+                                <option value="ai_human">AI pretending to be human</option>
+                            </select>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+
+        <!-- Submit guesses button -->
+        <button id="submit-guesses">Submit Your Guesses</button>
+
+        <a href="/">Start New Game</a>
+    </div>
+</body>
+</html>

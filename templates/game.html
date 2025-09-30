@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+</head>
+<body>
+    <div class="container">
+        <div id="state-message"></div> <!-- Dynamic state message here -->
+
+        <h1>Turing Test Game - Room: {{ game_data['code'] }}</h1>
+        <h2>Welcome, {{ session['player_name'] }}!</h2>
+
+        <!-- Submit a question -->
+        <div class="section">
+            <h3>Submit a Question</h3>
+            <form action="/submit_question" method="post">
+                <input type="text" name="question" placeholder="Type your question here" required>
+                <button type="submit">Submit Question</button>
+            </form>
+        </div>
+
+        <!-- Respond to questions -->
+        <div class="section">
+            <h3>Respond to a Question</h3>
+            <form action="/submit_response" method="post">
+                <select name="question_id">
+                    {% for question in game_data['questions'] %}
+                        <option value="{{ loop.index0 }}">{{ question['question'] }}</option>
+                    {% endfor %}
+                </select>
+                <textarea name="response" placeholder="Type your response here" required></textarea>
+                <select name="intended_author">
+                    <option value="human">Respond like a Human</option>
+                    <option value="ai">Respond like an AI</option>
+                </select>
+
+                <!-- Hidden field for response type, always "human" -->
+                <input type="hidden" name="response_type" value="human">
+
+                <button type="submit">Submit Response</button>
+            </form>
+        </div>
+
+        <!-- View current status -->
+        <div class="section">
+            <h3>Game Status</h3>
+            <p>Number of players: {{ game_data['players'] | length }}</p>
+            <p>Questions submitted: {{ game_data['questions'] | length }}</p>
+            <p>Responses submitted: {{ game_data['responses'] | length }}</p>
+            <a href="/results">View Results</a>
+        </div>
+    </div>
+</body>
+</html>

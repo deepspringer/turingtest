@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Responses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="/static/script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Your Responses</h1>
+         <!-- Countdown timer elements -->
+        <div id="countdown-container">
+            <div id="progress-bar" style="width: 100%; height: 20px; background-color: green;"></div>
+            <p>Time remaining: <span id="countdown-timer"></span></p>
+        </div>
+
+        <!-- Container for dynamically created questions and response fields -->
+        <div id="response-container"></div>
+
+        <!-- Button to submit responses -->
+        <button id="submit-responses-btn">Submit Responses</button>
+    </div>
+</body>
+</html>
+
+
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Responses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="/static/script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Your Responses</h1>
+
+        <div id="countdown-container">
+            <div id="progress-bar" style="width: 100%; height: 20px; background-color: green;"></div>
+            <p>Time remaining: <span id="countdown-timer"></span></p>
+        </div>
+        <form action="/submit_responses" method="post">
+            <input type="hidden" name="game_code" value="{{ game_data['game_code'] }}">
+            <input type="hidden" name="player" value="{{ player_name }}">
+
+            {% for question in game_data['questions'] %}
+                {% if session['player_name'] in question['assigned_players'].values() %}
+                    <h3>Question: {{ question['question'] }}</h3>
+                    {% if question['assigned_players']['human'] == session['player_name'] %}
+                        <textarea name="human_response" placeholder="Respond as a Human" required></textarea>
+                    {% endif %}
+                    {% if question['assigned_players']['ai'] == session['player_name'] %}
+                        <textarea name="ai_response" placeholder="Respond as AI" required></textarea>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <button type="submit">Submit Responses</button>
+        </form>
+    </div>
+</body>
+</html-->

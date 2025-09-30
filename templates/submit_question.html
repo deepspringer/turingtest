@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Question</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div id="state-message"></div>
+        <!-- Countdown timer elements -->
+        <div id="countdown-container">
+            <div id="progress-bar" style="width: 100%; height: 20px; background-color: green;"></div>
+            <p>Time remaining: <span id="countdown-timer"></span></p>
+        </div>
+        <h1>Submit Your Question</h1>
+        <input type="text" id="question-input" placeholder="Type your question here" required>
+        <button id="submit-question-btn">Submit Question</button>
+        <div id="waiting-message" style="display: none;">Thanks for your response, waiting for other players to finish...</div>
+    </div>
+    <!-- JavaScript to set the deadline from the server -->
+    <script>
+        const deadline = "{{ deadline }}"; // Pass deadline from Flask to JavaScript
+        console.log("Deadline from server:", deadline);
+        if (deadline) {
+            document.addEventListener('DOMContentLoaded', function () {
+                initializeCountdown(deadline);
+            });
+        } else {
+            console.log("Countdown not initialized; no deadline set.");
+        }
+    </script>
+</body>
+</html>

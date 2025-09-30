@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Author</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Guess the Author</h1>
+        <div id="countdown-container">
+            <div id="progress-bar" style="width: 100%; height: 20px; background-color: green;"></div>
+            <p>Time remaining: <span id="countdown-timer"></span></p>
+        </div>
+
+        <!-- Hidden fields for game data -->
+        <input type="hidden" id="game_code" value="{{ game_data['game_code'] }}">
+        <input type="hidden" id="player" value="{{ player_name }}">
+
+        <!-- Container to display the current question and responses -->
+        <div id="question-container">
+            <!-- Question and responses will be dynamically inserted here -->
+        </div>
+
+        <!-- Button to submit guesses -->
+        <button id="submit-guesses">Submit Your Guesses</button>
+        <!-- Waiting message -->
+        <p id="waiting-message" style="display: none;">Waiting for other users...</p>
+    </div>
+</body>
+</html>

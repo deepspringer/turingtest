@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Scores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+     <script>
+        // Injecting the deadline from the server into a JavaScript variable
+        const deadline = "{{ deadline }}";
+        console.log("Deadline from server:", deadline);
+        if (deadline) {
+            document.addEventListener('DOMContentLoaded', function () {
+                initializeCountdown(deadline);
+            });
+        } else {
+            console.log("Countdown not initialized; no deadline set.");
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Final Scores</h1>
+        <ul>
+            {% for player, info in game_data['players'].items() %}
+                <li>{{ player }}: {{ info['guessing_score'] + info['writing_score'] }} points (Guessing: {{ info['guessing_score'] }}, Writing: {{ info['writing_score'] }})</li>
+            {% endfor %}
+        </ul>
+        <a href="/">Play Again</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Game</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Turing Test Game!</h1>
+        <div id="state-message"></div> <!-- Dynamic state message here -->
+        <form action="/join" method="post">
+            <input type="text" name="player_name" placeholder="Enter your name" required>
+            <input type="text" name="game_code" placeholder="Enter game code" required>
+            <button type="submit">Join Game</button>
+        </form>
+    </div>
+</body>
+</html>

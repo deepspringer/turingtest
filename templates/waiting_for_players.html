@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiting for Players</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+     <script>
+        // Injecting the deadline from the server into a JavaScript variable
+        const deadline = "{{ deadline }}";
+        console.log("Deadline from server:", deadline);
+        if (deadline) {
+            document.addEventListener('DOMContentLoaded', function () {
+                initializeCountdown(deadline);
+            });
+        } else {
+            console.log("Countdown not initialized; no deadline set.");
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="state-message"></div> <!-- Dynamic state message here -->
+
+        <h1>Waiting for Players to Join</h1>
+        <p>Current players in game:</p>
+        <ul>
+            {% for player in game_data['players'].keys() %}
+                <li>{{ player }}</li>
+            {% endfor %}
+        </ul>
+
+            <form action="/start_game" method="post" >
+                <!--button type="submit" id="start_game_button" style="display: none;">Start Game</button-->
+            </form>
+            <div></div><button type="submit" id="j_start_game_button" style="display: none;">Start Game</button></div>
+
+            <p id="join_message">Waiting for more players to join the game...</p>
+            </div>
+</body>
+</html>
