@@ -4,6 +4,7 @@ import openai
 import threading
 from datetime import datetime, timedelta, timezone
 from random import sample
+from pathlib import Path
 import sensitive_data
 
 
@@ -14,7 +15,8 @@ openai.api_key = sensitive_data.api_key
 app = Flask(__name__)
 app.secret_key = sensitive_data.flask_secret
 
-GAME_DATA_PATH = '/home/turingtest/mysite/data/game_data.json'
+BASE_DIR = Path(__file__).resolve().parent
+GAME_DATA_PATH = BASE_DIR / 'data' / 'game_data.json'
 
 # Add this global variable to store ongoing timers
 timers = {}
@@ -297,7 +299,7 @@ def final_scores():
 def load_game_data():
     try:
         with game_data_lock:  # Acquire lock
-            with open(GAME_DATA_PATH, 'r') as file:
+            with GAME_DATA_PATH.open('r') as file:
                 return json.load(file)
     except (json.JSONDecodeError, FileNotFoundError):
         # If the file is empty or not found, return an empty dictionary
@@ -305,7 +307,8 @@ def load_game_data():
 
 def save_game_data(data):
     with game_data_lock:  # Acquire lock
-        with open(GAME_DATA_PATH, 'w') as file:
+        GAME_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)  # Ensure directory exists before writing
+        with GAME_DATA_PATH.open('w') as file:
             json.dump(data, file, indent=4)
 
 

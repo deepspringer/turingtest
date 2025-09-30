@@ -271,16 +271,16 @@ function initializeCountdown(deadline) {
                 console.log("setting new page")
                 console.log("game_code", game_code);
                 console.log("page", page);
-                let new_page = "await_question"
-                if(page == "await_question") {
-                    let new_page = "await_responses";
-                } else if(page == "await_responses") {
-                    new_page = "guessing"
-                } else if(page == "guessing") {
-                    new_page = "final_scores"
+                let new_page = "await_question";
+                if (page === "await_question") {
+                    new_page = "await_responses";
+                } else if (page === "await_responses") {
+                    new_page = "guessing";
+                } else if (page === "guessing") {
+                    new_page = "final_scores";
                 }
-                const url = "https://turingtest.pythonanywhere.com/"+new_page+"?game_code=" + game_code + "&player=" + player_name
-                window.location.href= url;
+                const url = `/${new_page}?game_code=${game_code}&player=${player_name}`;
+                window.location.href = url;
             }, 1000);
         }
     }, 1000);
@@ -556,7 +556,7 @@ function submitResponses(game_code, player_name) {
                         }
                         console.log("no more deadlines")
                         new_page = "final_scores";
-                        const url = "https://turingtest.pythonanywhere.com/" + new_page + "?game_code=" + game_code + "&player=" + player_name;
+                        const url = `/${new_page}?game_code=${game_code}&player=${player_name}`;
                         window.location.href = url;
 
                     }
@@ -608,7 +608,7 @@ function submitResponses(game_code, player_name) {
                     new_page = "final_scores";  // Redirect to final_scores at the end of guessing
                 }
 
-                const url = "https://turingtest.pythonanywhere.com/" + new_page + "?game_code=" + game_code + "&player=" + player_name;
+                const url = `/${new_page}?game_code=${game_code}&player=${player_name}`;
                 window.location.href = url;
             }, 1000);
         }
@@ -783,7 +783,7 @@ function loadNewQuestion(questionIndex) {
                 console.log(game_code)
                 console.log(player_name);
 
-                const url = "https://turingtest.pythonanywhere.com/await_question?game_code=" + game_code + "&player=" + player_name
+                const url = `/await_question?game_code=${game_code}&player=${player_name}`;
                 console.log(url)
                 fetch(`/j_start_game?game_code=${game_code}`)
                     .then(response => response.json())
